@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="제1회 실천 어린이 문학상"><meta property="og:description" content="친구들이 추천한 후보작과 추천 이유를 보고 투표해요."><link rel="icon" href="title.webp"><script src="config.js"></script><title>제1회 실천 어린이 문학상</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F8F2E6;--or:#FF8A3D;--or2:#F07A2E;--ink:#2C2C2A;--line:#3A3A38;--soft:#FCF8F0;--mute:#6B6A65;--br:#9A4512}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans KR',sans-serif;-webkit-text-size-adjust:100%}
+button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer;border:0;background:none}
+.wrap{max-width:1500px;margin:0 auto;padding:14px 20px 28px}
+header{display:flex;flex-direction:column;align-items:center;text-align:center}
+header img{width:min(600px,84vw);height:auto;display:block;cursor:pointer}
+body.in header img{width:min(340px,56vw)}
+body.pk .wrap{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding-bottom:6vh}
+body.pk header img{width:min(520px,80vw)}
+body.pk .pick{width:100%}
+body.pk .pg{grid-template-columns:repeat(2,minmax(0,1fr));max-width:540px;margin:0 auto}
+body.pk .pb{padding:26px 8px}
+.pre{background:#FFF7D6;border:1.5px dashed #BA7517;color:#633806;border-radius:12px;padding:8px 12px;font-size:14px;text-align:center;margin-bottom:10px}
+.pick{max-width:900px;margin:10px auto 0;text-align:center}
+.pick h2{font-size:24px;font-weight:900;margin:18px 0 16px}
+.pg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.pb{background:#fff;border:2px solid var(--line);border-radius:20px;padding:22px 8px}
+.pb b{display:block;font-size:24px;font-weight:900}.pb span{font-size:14px;color:var(--mute)}
+.pb:active,.pb:hover{background:#FFE7D4}
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0 4px}
+.tab{border:2px solid var(--line);border-radius:999px;padding:7px 18px;font-weight:700;background:#fff}
+.tab.on{background:var(--or);color:#fff}
+.hint{font-size:14px;color:var(--mute);margin:10px 0 8px}
+.shelf{display:flex;gap:14px;overflow-x:auto;padding-bottom:14px;align-items:flex-start;scrollbar-color:var(--or) #EFE8DA}
+.shelf::-webkit-scrollbar{height:12px}.shelf::-webkit-scrollbar-track{background:#EFE8DA;border-radius:8px}.shelf::-webkit-scrollbar-thumb{background:var(--or);border-radius:8px}
+.col{flex:0 0 280px;background:#fff;border:2px solid var(--line);border-radius:18px;padding:12px}
+.bk{display:flex;gap:10px;align-items:center;padding-bottom:10px;border-bottom:1.5px dashed #D3D1C7;margin-bottom:4px}
+.cv{display:flex;flex:none}.cv img{width:64px;height:90px;object-fit:cover;border-radius:6px;border:1px solid #E3DED2;background:#EFE8DA}
+.cv{gap:4px}.cv.m img{width:40px;height:58px}
+.num{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--or);font-weight:900;font-size:14px;align-items:center;justify-content:center;margin-bottom:4px}
+.bt{font-size:17px;font-weight:900;line-height:1.3}.ba{font-size:12.5px;color:var(--mute);margin-top:2px}
+.post{display:block;width:100%;text-align:left;background:var(--soft);border:1.5px solid #D3D1C7;border-radius:12px;padding:10px 11px;margin-top:9px}
+.who{font-size:12.5px;font-weight:700;color:var(--br)}
+.pc{font-size:14.5px;line-height:1.6;margin-top:3px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-line}
+.none{font-size:14px;color:var(--mute);padding:14px 4px;text-align:center}
+.more,.write{display:block;width:100%;margin-top:9px;border-radius:12px;padding:9px;font-weight:700;font-size:14px}
+.more{border:1.5px solid var(--line);background:#fff}.write{background:var(--or);color:#fff;border:2px solid var(--line)}
+.vote{margin-top:18px;background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.vote b{font-size:20px;font-weight:900;display:block}.vote span{font-size:14px;color:var(--mute)}
+.vbtn{background:var(--or);color:#fff;font-weight:900;font-size:17px;border-radius:999px;padding:12px 26px;text-decoration:none;border:2px solid var(--line)}
+.vbtn.off{background:#E8E2D6;color:var(--mute)}
+.back{font-weight:700;font-size:16px;color:var(--br);padding:6px 0;margin:6px 0}
+.box{background:#fff;border:2px solid var(--line);border-radius:18px;padding:18px 22px}
+.dv{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px}
+.big img{width:200px;height:auto;border-radius:8px;border:1px solid #E3DED2;display:block;margin-bottom:6px}
+.full{font-size:18px;line-height:1.85;white-space:pre-line;margin:10px 0 6px}
+.ph img{max-width:100%;max-height:520px;border-radius:10px;margin-top:10px;display:block}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.pill{border:1.5px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;font-size:14px;background:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}.grid .post{margin:0}
+.bh{display:flex;gap:16px;align-items:center;margin-bottom:14px}
+.f{display:grid;gap:10px;max-width:720px}.f label{font-size:14px;font-weight:700}
+.f input,.f textarea,.f select{border:1.5px solid #CFC9BC;border-radius:10px;padding:10px;font-size:16px;background:#fff;width:100%}
+.f textarea{min-height:200px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.err{color:#B3261E;font-size:14px;min-height:20px}.ok{color:#0F6E56;font-size:14px}
+.load{padding:40px;text-align:center;color:var(--mute)}
+.kg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:10px auto 0;max-width:980px}
+.kg .fc .cap{font-size:18px;padding:10px 12px}
+.fc{aspect-ratio:3/4.3;cursor:pointer;border:2px solid var(--line);border-radius:16px;background:#fff;overflow:hidden;display:flex;flex-direction:column;padding:0;text-align:left}
+.fc .im{flex:1;display:flex;gap:3px;background:#EFE8DA;min-height:0}.fc .im img{flex:1;min-width:0;width:100%;height:100%;object-fit:cover}
+.fc .cap{padding:7px 9px;font-weight:900;font-size:14.5px;line-height:1.3;display:flex;gap:6px;align-items:center}.fc .cap .num{flex:none;margin:0}
+.kb{display:grid;grid-template-columns:1fr minmax(220px,300px) 1fr;gap:18px;align-items:center;margin-top:8px}
+.kb .mid{text-align:center}.kb .mid .cvs{display:flex;gap:6px;justify-content:center}.kb .mid img{width:100%;max-width:300px;border-radius:12px;border:2px solid var(--line);display:block}.kb .mid .cvs img{height:auto}.kb .mid .cvs.m img{max-width:48%}
+.kb .mid .bt{font-size:22px;margin-top:8px}
+.bs{display:flex;flex-direction:column;gap:14px}
+.bub{border:2.5px solid var(--line);border-radius:26px;padding:14px 18px;font-size:19px;font-weight:700;line-height:1.45;white-space:pre-line}
+.bs:first-child .bub{text-align:right}
+.kbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+
+@media (max-width:600px){.kg{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.kg .fc{aspect-ratio:auto}.kg .fc .im{flex:none;aspect-ratio:3/4}.kg .fc .cap{font-size:14px;padding:7px 9px;word-break:keep-all}.kb .mid img{max-width:200px;margin:0 auto}.kb .mid .bt{font-size:18px}.bub{font-size:15.5px;padding:10px 14px;border-radius:20px;text-align:left!important}}
+@media (max-width:760px){.kb{grid-template-columns:1fr}.kb .mid{order:-1}.dv{grid-template-columns:1fr}.big img{width:120px}.row{grid-template-columns:1fr}.pg{grid-template-columns:1fr 1fr}}
+</style></head><body><div class="wrap">
+
+<header><img src="title.webp" alt="제1회 실천 어린이 문학상" onclick="go('pick')"></header>
+<main id="app"><div class="load">불러오는 중…</div></main>
+</div>
+<script>
+const CFG={csv:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQPbSuVlIH_H29oQB8FduoeZxV0iJn0wPRmzswDyMpGLt13cZTVQhXywI6LQG9aJaammcUu4BoG-Qfx/pub?gid=5&single=true&output=csv',api:window.API||''};
+const DIV={유:{n:'유치원',d:'',gr:['유치원'],vote:'https://forms.gle/fuNCDrb3g3zwKZZA7'},저:{n:'저학년',d:'1·2학년',gr:['1학년','2학년'],vote:'https://forms.gle/1kv17ixsG6kZNUTt6'},중:{n:'중학년',d:'3·4학년',gr:['3학년','4학년'],vote:'https://forms.gle/7Qo8HGGS3Ho5VrJy6'},고:{n:'고학년',d:'5·6학년',gr:['5학년','6학년'],vote:'https://forms.gle/nr3nK1x23MiZDR84A'}};
+const BOOKS={"유":[["츠츠츠츠","이지은 지음","사계절","34215/17/cover500/k482931037_2.jpg"],["숲의 시간","윌리엄 스노우 글 · 앨리스 멜빈 그림","북극곰","29044/2/cover500/k392836038_1.jpg"],["뚜껑정원","임승희 지음","창조와지식","34644/94/cover500/k822933684_1.jpg"],["할머니의 여름휴가","안녕달 지음","창비","39834/41/cover500/8936454951_2.jpg"],["괴물이 오면","안정은 지음","이야기꽃","25747/20/cover500/8998751844_1.jpg"],["감기 걸린 물고기","박정섭 지음","사계절","9123/41/cover500/895828448x_1.jpg"],["찍찍찍 마을 시리즈","멜리 지음 (딸기 축제 · 옥수수 축제)","위즈덤하우스","31266/92/cover500/k962832460_1.jpg|34353/69/cover500/k442932098_1.jpg"],["꿈의 학교","허아성 지음","책읽는곰","32705/62/cover500/k282936774_1.jpg"],["꿈의 자동차","허아성 지음","책읽는곰","15079/98/cover500/k122533164_2.jpg"]],"저":[["양배추를 응원해 주세요","온선영 글 · 홍주연 그림","창비","38807/95/cover500/8936451685_1.jpg"],["겁보 만보","김유 글 · 최미란 그림","책읽는곰","5455/65/cover500/6000820483_3.jpg"],["친절한 땅콩 호텔","임고을 글 · 김규아 그림","문학동네","37401/43/cover500/k432032894_1.jpg"],["해든 분식","동지아 글 · 윤정주 그림","문학동네","34942/93/cover500/k562934467_1.jpg"],["뭔가 특별한 아저씨","진수경 지음","천개의바람","17550/12/cover500/k092534401_1.jpg"],["감기 걸린 물고기","박정섭 지음","사계절","9123/41/cover500/895828448x_1.jpg"],["츠츠츠츠","이지은 지음","사계절","34215/17/cover500/k482931037_2.jpg"]],"고":[["5번 레인","은소홀 글 · 노인경 그림","문학동네","25151/14/cover500/8954674631_2.jpg"],["건조주의보","이금이 글 · 양양 그림","밤티","35686/15/cover500/k722036926_1.jpg"],["몬스터 차일드","이재문 글 · 김지인 그림","사계절","27942/99/cover500/k862734112_2.jpg"],["해리엇","한윤섭 글 · 서영아 그림","문학동네","1210/80/cover500/895461504x_1.jpg"],["지옥으로 반지를 배달합니다","최영희 글 · 조성흠 그림","학교도서관저널","37289/35/cover500/8969151885_1.jpg"],["13일의 단톡방","방미진 글 · 국민지 그림","상상의집","25424/31/cover500/k122633317_2.jpg"],["토마큘라","김용준 글 · 아쑬 그림","책고래","19003/18/cover500/k752635993_1.jpg"],["미지의 파랑 1","차율이 글 · 샤토 그림","비룡소","30383/16/cover500/8949146126_1.jpg"]],"중":[["초원의 명탐정 몽구리","양자현 글 · 손지희 그림","천개의바람","23672/69/cover500/k522638939_1.jpg"],["친절한 땅콩 호텔","임고을 글 · 김규아 그림","문학동네","37401/43/cover500/k432032894_1.jpg"],["욕 좀 하는 이유나 3","류재향 글 · 이덕화 그림","위즈덤하우스","39930/1/cover500/k272130121_1.jpg"],["마지막 책을 가진 아이","하은경 글 · 윤지회 그림","미래엔아이세움","13820/79/cover500/k022532124_2.jpg"],["비밀 소원","김다노 글 · 이윤희 그림","사계절","24794/3/cover500/k862631834_1.jpg"],["소리 질러, 운동장","진형민 글 · 이한솔 그림","창비","5911/75/cover500/k602030761_2.jpg"],["오홍홍홍 홍콩 할매","조영서 글 · 김영수 그림","우리학교","28160/5/cover500/k402835863_1.jpg"],["신호등 특공대","김태호 글 · 윤태규 그림","문학과지성사","11640/61/cover500/8932030308_1.jpg"]]};
+const SHOW=4,ORDER=['유','저','중','고'];
+let D=[],G='',V='pick',cb=0,cp=null,PH=null,mine=[];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/^'/,'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const cov=k=>'https://image.aladin.co.kr/product/'+k;
+const covers=(b,cls)=>'<div class="cv '+(cls||'')+'">'+b[3].split('|').map(k=>'<img src="'+cov(k)+'" alt="" loading="lazy">').join('')+'</div>';
+const ps=b=>D.filter(p=>p.g===G&&p.b===b);
+const sch=s=>String(s||'').trim().replace(/초$/,'초등학교');
+const who=p=>esc(sch(p.s))+(p.gr?' '+esc(p.gr):'')+(p.n?' · '+esc(p.n):'');
+const card=p=>'<button class="post" onclick="go(\'post\','+p.b+',\''+p.id+'\')"><div class="who">'+who(p)+'</div><div class="pc">'+esc(p.c)+'</div></button>';
+const binfo=(i,b)=>'<span class="num">'+i+'</span><div class="bt">'+b[0]+'</div><div class="ba">'+b[1]+'<br>'+b[2]+'</div>';
+const ls=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
+function go(v,b,id){if(V==='form')saveDraft();V=v;if(b)cb=b;cp=id||null;if(G)history.replaceState(null,'','#'+G);render();if(v!=='list')window.scrollTo(0,0)}
+function setG(g){G=g;go('list')}
+function tabs(){return '<div class="tabs">'+ORDER.map(g=>'<button class="tab'+(g===G?' on':'')+'" onclick="setG(\''+g+'\')">'+DIV[g].n+'</button>').join('')+'</div>'}
+function vote(){const u=DIV[G].vote;return '<div class="vote"><div><b>1인당 올해의 책 3권을 골라 주세요</b><span>'+DIV[G].n+' 투표 · 11월 9일 ~ 11월 13일</span></div>'+(u?'<a class="vbtn" href="'+u+'" target="_blank" rel="noopener">투표하러 가기</a>':'<span class="vbtn off">투표 링크 준비 중</span>')+'</div>'}
+const BC=['#FFE7D4','#E1F5EE','#EEEDFE','#FBEAF0','#E6F1FB','#FAEEDA','#EAF3DE'];
+function rKg(){const B=BOOKS[G];return '<div class="hint">책 표지를 누르면 친구들이 한 말이 보여요.</div><div class="kg">'+B.map((b,i)=>'<button class="fc" onclick="go(\'kb\','+(i+1)+')"><div class="im">'+b[3].split('|').map(k=>'<img src="'+cov(k)+'" alt="">').join('')+'</div><div class="cap"><span class="num">'+(i+1)+'</span>'+b[0]+'</div></button>').join('')+'</div>'}
+function rKb(){const b=BOOKS[G][cb-1],a=ps(cb),L=[],R=[];
+ a.forEach((p,i)=>(i%2?R:L).push('<div class="bub" style="background:'+BC[i%BC.length]+'">'+esc(p.c)+'</div>'));
+ return '<div class="kbar"><button class="back" onclick="go(\'list\')">‹ 책 고르기로</button></div><div class="kb"><div class="bs">'+L.join('')+'</div><div class="mid"><div class="cvs'+(b[3].includes('|')?' m':'')+'">'+b[3].split('|').map(k=>'<img src="'+cov(k)+'" alt="">').join('')+'</div><div class="bt">'+b[0]+'</div><div class="ba">'+b[1]+' · '+b[2]+'</div><button class="write" style="max-width:240px;margin:12px auto 0" onclick="go(\'form\','+cb+')">추천 이유 쓰기</button></div><div class="bs">'+(a.length?R.join(''):'')+'</div></div>'+(a.length?'':'<div class="none" style="font-size:18px">아직 친구들 말이 없어요. 첫 번째로 들려주세요!</div>')}
+function render(){const a=$('app');document.body.classList.toggle('in',V!=='pick');document.body.classList.toggle('pk',V==='pick');
+ if(V==='pick'){a.innerHTML='<div class="pick"><h2>어느 부문을 볼까요?</h2><div class="pg">'+ORDER.map(g=>'<button class="pb" onclick="setG(\''+g+'\')"><b>'+DIV[g].n+'</b><span>'+(DIV[g].d?DIV[g].d+' · ':'')+BOOKS[g].length+'권</span></button>').join('')+'</div></div>';return}
+ const B=BOOKS[G];let h=tabs();
+ if(V==='list'&&G==='유'){h+=rKg()}
+ else if(V==='kb'){h+=rKb()}
+ else if(V==='list'){h+='<div class="hint">옆으로 밀어서 넘겨요. 글을 누르면 전체 내용이 보여요.</div><div class="shelf" id="shelf">'+B.map((b,i)=>{const a=ps(i+1);return '<div class="col"><div class="bk">'+covers(b,b[3].includes('|')?'m':'')+'<div>'+binfo(i+1,b)+'</div></div>'+(a.length?a.slice(0,SHOW).map(card).join(''):'<div class="none">아직 추천 글이 없어요.<br>첫 번째로 써 주세요!</div>')+(a.length>SHOW?'<button class="more" onclick="go(\'book\','+(i+1)+')">더 보기 (+'+(a.length-SHOW)+'개)</button>':'')+'<button class="write" onclick="go(\'form\','+(i+1)+')">추천 이유 쓰기</button></div>'}).join('')+'</div>'}
+ else if(V==='book'){const b=B[cb-1],a=ps(cb);h+='<button class="back" onclick="go(\'list\')">‹ 책 목록으로</button><div class="box"><div class="bh">'+covers(b)+'<div>'+binfo(cb,b)+'<div class="ba">추천 글 '+a.length+'개</div></div><div style="margin-left:auto;min-width:160px"><button class="write" onclick="go(\'form\','+cb+')">추천 이유 쓰기</button></div></div><div class="grid">'+a.map(card).join('')+'</div></div>'}
+ else if(V==='post'){const p=D.find(x=>x.id===cp);if(!p){V='list';return render()}const b=B[p.b-1],a=ps(p.b),k=a.indexOf(p);
+  h+='<button class="back" onclick="go(\'book\','+p.b+')">‹ '+b[0]+' 글 모두 보기</button><div class="box dv"><div class="big">'+b[3].split('|').map(x=>'<img src="'+cov(x)+'" alt="">').join('')+binfo(p.b,b)+'</div><div><div class="who" style="font-size:15px">'+who(p)+'</div><div class="full">'+esc(p.c)+'</div><div class="ph" id="ph"></div><div class="nav">'+(k>0?'<button class="pill" onclick="go(\'post\','+p.b+',\''+a[k-1].id+'\')">‹ 이전 글</button>':'')+(k<a.length-1?'<button class="pill" onclick="go(\'post\','+p.b+',\''+a[k+1].id+'\')">다음 글 ›</button>':'')+'<span class="ba">'+(k+1)+' / '+a.length+'</span><span style="margin-left:auto"></span><button class="pill" onclick="go(\'form\','+p.b+',\''+p.id+'\')">수정</button><button class="pill" onclick="askDel(\''+p.id+'\')">삭제</button></div><div class="nav" id="dz"></div></div></div>';
+  if(p.img)setTimeout(()=>photos(p),0)}
+ else if(V==='form'){const b=B[cb-1],p=cp?D.find(x=>x.id===cp):null,me=ls('me')||{},dr=!p&&ls('draft_'+G+cb);const v=p||Object.assign({n:me.n||'',s:me.s||'',gr:me.gr||'',c:''},dr||{});
+  h+='<button class="back" onclick="go('+(p?'\'post\','+cb+',\''+p.id+'\'':(G==='유'?'\'kb\','+cb:'\'list\''))+')">‹ 돌아가기</button><div class="box"><div class="bh">'+covers(b)+'<div>'+binfo(cb,b)+'</div></div><div class="f">'+(dr&&dr.c?'<div class="ok">쓰던 글을 불러왔어요. 이어서 써 주세요.</div>':'')+
+  '<div class="row"><div><label for="fn">별명</label><input id="fn" maxlength="15" value="'+esc(v.n)+'"></div><div><label for="fs">학교</label><input id="fs" maxlength="20" placeholder="세미초" value="'+esc(v.s)+'"></div><div><label for="fg">학년 (안 골라도 돼요)</label><select id="fg"><option value="">선택 안 함</option>'+DIV[G].gr.map(g=>'<option>'+g+'</option>').join('')+'</select></div></div>'+
+  '<div><label for="fc">추천 이유</label><textarea id="fc" maxlength="1500" placeholder="이 책을 추천하는 까닭을 써 주세요">'+esc(v.c)+'</textarea></div><div><label for="fp">'+(p?'글 비밀번호 4자리':'비밀번호 4자리 (고치거나 지울 때 써요)')+'</label><input id="fp" maxlength="4" inputmode="numeric" style="max-width:200px"></div><div class="err" id="fe"></div><button class="write" id="fb" style="max-width:240px" onclick="save()">'+(p?'고치기':'올리기')+'</button></div></div>';
+  $('app').innerHTML=h+vote();$('fg').value=v.gr||'';document.querySelectorAll('.f input,.f textarea,.f select').forEach(e=>e.oninput=()=>{$('fe').textContent='';if(!cp)saveDraft()});return}
+ const sx=$('shelf')?$('shelf').scrollLeft:0;a.innerHTML=h+vote();
+ if(V==='list'&&$('shelf')){const s=$('shelf');s.scrollLeft=sx;s.addEventListener('wheel',e=>{if(Math.abs(e.deltaY)<=Math.abs(e.deltaX))return;const m=s.scrollWidth-s.clientWidth;if((e.deltaY>0&&s.scrollLeft<m-1)||(e.deltaY<0&&s.scrollLeft>0)){s.scrollLeft+=e.deltaY;e.preventDefault()}},{passive:false})}}
+function saveDraft(){if(V!=='form'||cp||!$('fc'))return;ls('draft_'+G+cb,{n:$('fn').value,s:$('fs').value,gr:$('fg').value,c:$('fc').value})}
+function val(){const o={g:G,b:cb,n:$('fn').value.trim(),s:sch($('fs').value),gr:$('fg').value,c:$('fc').value.trim(),pw:$('fp').value.trim()};
+ if(!o.n||!o.s||!o.c)return '별명, 학교, 추천 이유를 모두 써 주세요.';if(!/^\d{4}$/.test(o.pw))return '비밀번호는 숫자 4자리로 써 주세요.';return o}
+async function save(){const o=val();if(typeof o==='string'){$('fe').textContent=o;return}
+ ls('me',{n:o.n,s:o.s,gr:o.gr});$('fb').disabled=true;$('fb').textContent='올리는 중…';
+ try{const r=await send(cp?'edit':'add',Object.assign({id:cp},o));ls('draft_'+G+cb,null);
+  if(cp){Object.assign(D.find(x=>x.id===cp),{n:o.n,s:o.s,gr:o.gr,c:o.c});go('post',cb,cp)}else{const p={id:String(r.id),g:G,b:cb,s:o.s,gr:o.gr,c:o.c,img:'',n:o.n};D.push(p);mine.push(p);go(G==='유'?'kb':'book',cb)}}
+ catch(e){$('fe').textContent=e.message||e;$('fb').disabled=false;$('fb').textContent=cp?'고치기':'올리기'}}
+function askDel(id){$('dz').innerHTML='<input id="dp" maxlength="4" inputmode="numeric" placeholder="비밀번호 4자리" style="border:1.5px solid #CFC9BC;border-radius:10px;padding:7px 10px;width:150px;font-size:15px"><button class="pill" onclick="del_(\''+id+'\')">지우기</button><span class="err" id="de"></span>';$('dp').focus()}
+async function del_(id){const pw=$('dp').value.trim();if(!/^\d{4}$/.test(pw)){$('de').textContent='비밀번호는 숫자 4자리예요.';return}try{await send('del',{id,pw});D=D.filter(x=>x.id!==id);go(G==='유'?'kb':'book',cb)}catch(e){$('de').textContent=e.message||e}}
+async function photos(p){try{if(!PH)PH=await (await fetch('photos.json')).json();if(cp===p.id)$('ph').innerHTML=String(p.img).split(',').map(k=>PH[k.trim()]?'<img src="'+PH[k.trim()]+'" alt="학급 활동 사진">':'').join('')}catch(e){}}
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+async function send(act,o){for(let i=0;i<4;i++){try{const r=await post(act,o);if(r.ok)return r;throw Object.assign(new Error(r.msg),{hard:1})}catch(e){if(e.hard||i===3)throw e;await wait(1500*(i+1)+Math.random()*1500)}}}
+
+function csv(t){const R=[];let r=[],f='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=ch}else if(ch==='"')q=true;else if(ch===','){r.push(f);f=''}else if(ch==='\n'){r.push(f);R.push(r);r=[];f=''}else if(ch!=='\r')f+=ch}if(f||r.length){r.push(f);R.push(r)}return R}
+const PK='pend_v1';
+function pend(){const now=Date.now();return (ls(PK)||[]).filter(x=>now-x.t<600000)}
+async function loadData(){const r=await fetch(CFG.csv+'&t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('load');
+ let d=csv(await r.text()).slice(1).filter(x=>x[0]).map(x=>({id:String(x[0]),g:x[1],b:Number(x[2]),s:x[3],gr:x[4],c:x[5],img:x[6]||'',n:x[7]||''}));
+ pend().forEach(x=>{const i=d.findIndex(p=>p.id===x.p.id);if(x.a==='del'){if(i>=0)d.splice(i,1)}else if(x.a==='edit'){if(i>=0)Object.assign(d[i],x.p)}else if(i<0)d.push(x.p)});return d}
+async function post(act,o){if(!CFG.api)return {ok:false,msg:'글쓰기 주소가 아직 설정되지 않았어요.'};
+ const r=await (await fetch(CFG.api,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({act},o))})).json();
+ if(r.ok){const p=act==='del'?{id:String(o.id)}:{id:String(act==='add'?r.id:o.id),g:o.g,b:o.b,s:o.s,gr:o.gr,c:o.c,n:o.n};if(act==='add')p.img='';const L=pend();L.push({t:Date.now(),a:act,p});ls(PK,L)}
+ return r}
+
+window.addEventListener('pagehide',saveDraft);
+(async()=>{for(let i=0;i<5;i++){try{D=await loadData();break}catch(e){await wait(1500*(i+1)+Math.random()*2000)}}const h=decodeURIComponent(location.hash.slice(1));if(DIV[h]){G=h;V='list'}render();
+ setInterval(async()=>{if(document.hidden||V==='form')return;try{const n=await loadData();mine.forEach(p=>{if(!n.find(x=>x.id===p.id))n.push(p)});D=n;if(V!=='form')render()}catch(e){}},60000+Math.random()*60000)})();
+</script></body></html>
