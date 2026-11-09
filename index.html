@@ -101,7 +101,7 @@ const ls=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)|
 function go(v,b,id){if(V==='form')saveDraft();V=v;if(b)cb=b;cp=id||null;if(G)history.replaceState(null,'','#'+G);render();if(v!=='list')window.scrollTo(0,0)}
 function setG(g){G=g;go('list')}
 function tabs(){return '<div class="tabs">'+ORDER.map(g=>'<button class="tab'+(g===G?' on':'')+'" onclick="setG(\''+g+'\')">'+DIV[g].n+'</button>').join('')+'</div>'}
-function vote(){const u=VOFF[G]?'':DIV[G].vote;return '<div class="vote"><div><b>1인당 올해의 책 3권을 골라 주세요</b><span>'+DIV[G].n+' 투표 · 11월 9일 ~ 11월 13일</span></div>'+(u?'<a class="vbtn" href="'+u+'" target="_blank" rel="noopener">투표하러 가기</a>':'<span class="vbtn off">'+(VOFF[G]?'지금은 투표를 쉬고 있어요':'투표 링크 준비 중')+'</span>')+'</div>'}
+function vote(){const u=VOFF[G]?'':DIV[G].vote;return '<div class="vote"><div><b>1인당 올해의 책 3권을 골라 주세요</b><span>'+DIV[G].n+' 투표 · 11월 9일 ~ 11월 20일</span></div>'+(u?'<a class="vbtn" href="'+u+'" target="_blank" rel="noopener">투표하러 가기</a>':'<span class="vbtn off">'+(VOFF[G]?'지금은 투표를 쉬고 있어요':'투표 링크 준비 중')+'</span>')+'</div>'}
 const BC=['#FFE7D4','#E1F5EE','#EEEDFE','#FBEAF0','#E6F1FB','#FAEEDA','#EAF3DE'];
 function rKg(){const B=BOOKS[G];return '<div class="hint">책 표지를 누르면 친구들이 한 말이 보여요.</div><div class="kg">'+B.map((b,i)=>'<button class="fc" onclick="go(\'kb\','+(i+1)+')"><div class="im">'+b[3].split('|').map(k=>'<img src="'+cov(k)+'" alt="">').join('')+'</div><div class="cap"><span class="num">'+(i+1)+'</span>'+b[0]+'</div></button>').join('')+'</div>'}
 function rKb(){const b=BOOKS[G][cb-1],a=ps(cb),L=[],R=[];
